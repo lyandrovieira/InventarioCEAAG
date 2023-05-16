@@ -4,6 +4,7 @@
  */
 package formularios;
 
+import javax.swing.table.DefaultTableModel;
 import model.bean.Itens;
 import model.dao.ItensDAO;
 
@@ -18,7 +19,27 @@ public class CadastroBens extends javax.swing.JFrame {
      */
     public CadastroBens() {
         initComponents();
-        //this.setResizable(false);
+        readJTable();
+    }
+    
+    public void readJTable() {
+        DefaultTableModel tabelaItens = (DefaultTableModel) tblItens.getModel();
+        tabelaItens.setNumRows(0);
+        
+        ItensDAO item_dao = new ItensDAO();
+        for (Itens i : item_dao.read()) {
+            tabelaItens.addRow(new Object[]{
+                i.getId(),
+                i.getNome(),
+                i.getQuantidade(),
+                i.getData(),
+                i.getAquisicao(),
+                i.getRecurso(),
+                i.getTipo(),
+                i.getSituacao()
+            });
+        
+        }
     }
     
     /**
@@ -128,9 +149,9 @@ public class CadastroBens extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(aquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(recurso, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(aquisicao, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(recurso, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -160,8 +181,9 @@ public class CadastroBens extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(aquisicao)
-                    .addComponent(recurso)
-                    .addComponent(tipo)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(tipo)
+                        .addComponent(recurso))
                     .addComponent(situacao))
                 .addGap(13, 13, 13)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -223,6 +245,8 @@ public class CadastroBens extends javax.swing.JFrame {
         item.setSituacao(situacao.getSelectedItem().toString());
         
         dao.create(item);
+        
+        readJTable();
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
     /**

@@ -17,6 +17,7 @@ public class Inventario {
         // TODO code application logic here
         CadastroBens cadastro = new CadastroBens();
         cadastro.setVisible(true);
+        cadastro.setResizable(false);
     }
     
 }
