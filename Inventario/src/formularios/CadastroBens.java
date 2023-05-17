@@ -4,6 +4,7 @@
  */
 package formularios;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.bean.Itens;
 import model.dao.ItensDAO;
@@ -20,12 +21,13 @@ public class CadastroBens extends javax.swing.JFrame {
     public CadastroBens() {
         initComponents();
         readJTable();
+        recurso.setEnabled(false);
     }
-    
-    public void readJTable() {
+
+    public void readJTable() {  //Método para mostrar na tabela os dados salvos na base de dados.
         DefaultTableModel tabelaItens = (DefaultTableModel) tblItens.getModel();
         tabelaItens.setNumRows(0);
-        
+
         ItensDAO item_dao = new ItensDAO();
         for (Itens i : item_dao.read()) {
             tabelaItens.addRow(new Object[]{
@@ -38,10 +40,10 @@ public class CadastroBens extends javax.swing.JFrame {
                 i.getTipo(),
                 i.getSituacao()
             });
-        
+
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,7 +73,7 @@ public class CadastroBens extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Inventário - Colégio Estadual Adelino Antônio Gomide");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jScrollPane1.setName("Nome"); // NOI18N
 
@@ -87,9 +89,14 @@ public class CadastroBens extends javax.swing.JFrame {
         aquisicao.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         aquisicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Compra", "Doação SEDUC", "Doação terceiros" }));
         aquisicao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Forma de Aquisição", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
+        aquisicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                aquisicaoActionPerformed(evt);
+            }
+        });
 
         recurso.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        recurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "PRO-ESCOLA", "PDDE", "EQUIPAR" }));
+        recurso.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "PRO-ESCOLA", "PDDE", "EQUIPAR", "Não se Aplica" }));
         recurso.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Recurso", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
         tipo.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -189,8 +196,8 @@ public class CadastroBens extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
                     .addComponent(btnCancel))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -230,24 +237,51 @@ public class CadastroBens extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnCancelActionPerformed
 
+    //Cadastra itens na base de dados.
     private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
         // TODO add your handling code here:
-        
-        Itens item  = new Itens();
-        ItensDAO dao = new ItensDAO();
-        
-        item.setNome(nome.getText());
-        item.setQuantidade(Integer.parseInt(quantidade.getText()));
-        item.setData(dataEntrada.getText());
-        item.setAquisicao(aquisicao.getSelectedItem().toString());
-        item.setRecurso(recurso.getSelectedItem().toString());
-        item.setTipo(tipo.getSelectedItem().toString());
-        item.setSituacao(situacao.getSelectedItem().toString());
-        
-        dao.create(item);
-        
-        readJTable();
+        if ((nome.getText().isBlank()) || (quantidade.getText().isBlank()) || (dataEntrada.getText().isBlank())
+           || (aquisicao.getSelectedItem() == "Selecione") || (recurso.getSelectedItem() == "Selecione")
+           || (tipo.getSelectedItem() == "Selecione") || (situacao.getSelectedItem() == "Selecione")) {
+            JOptionPane.showMessageDialog(null, "Campo obrigatório em branco!");
+        } else {
+            Itens item = new Itens();
+            ItensDAO dao = new ItensDAO();
+
+            item.setNome(nome.getText());
+            item.setQuantidade(Integer.parseInt(quantidade.getText()));
+            item.setData(dataEntrada.getText());
+            item.setAquisicao(aquisicao.getSelectedItem().toString());
+            item.setRecurso(recurso.getSelectedItem().toString());
+            item.setTipo(tipo.getSelectedItem().toString());
+            item.setSituacao(situacao.getSelectedItem().toString());
+
+            dao.create(item);
+
+            nome.setText(null);
+            quantidade.setText(null);
+            dataEntrada.setText(null);
+            aquisicao.setSelectedItem("Selecione");
+            recurso.setSelectedItem("Selecione");
+            tipo.setSelectedItem("Selecione");
+            situacao.setSelectedItem("Selecione");
+
+            readJTable();
+        }
+
     }//GEN-LAST:event_btnCadastrarActionPerformed
+
+    private void aquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aquisicaoActionPerformed
+        // TODO add your handling code here:
+        if (aquisicao.getSelectedItem() == "Compra") {
+            recurso.setEnabled(true);
+        } else if (aquisicao.getSelectedItem() == "Selecione") {
+            recurso.setEnabled(false);
+        } else {
+            recurso.setSelectedItem("Não se Aplica");
+            recurso.setEnabled(false);
+        }
+    }//GEN-LAST:event_aquisicaoActionPerformed
 
     /**
      * @param args the command line arguments
