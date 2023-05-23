@@ -25,7 +25,7 @@ public class EditarBens extends javax.swing.JFrame {
     }
 
     public void readJTable() {  //Método para mostrar na tabela os dados salvos na base de dados.
-        DefaultTableModel tabelaItens = (DefaultTableModel) tblIEditItens.getModel();
+        DefaultTableModel tabelaItens = (DefaultTableModel) tblEditItens.getModel();
         tabelaItens.setNumRows(0);
 
         ItensDAO item_dao = new ItensDAO();
@@ -66,7 +66,7 @@ public class EditarBens extends javax.swing.JFrame {
         btnEditar = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblIEditItens = new javax.swing.JTable();
+        tblEditItens = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -127,8 +127,8 @@ public class EditarBens extends javax.swing.JFrame {
             }
         });
 
-        tblIEditItens.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        tblIEditItens.setModel(new javax.swing.table.DefaultTableModel(
+        tblEditItens.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tblEditItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -144,18 +144,18 @@ public class EditarBens extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblIEditItens.getTableHeader().setReorderingAllowed(false);
-        tblIEditItens.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblEditItens.getTableHeader().setReorderingAllowed(false);
+        tblEditItens.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblIEditItensMouseClicked(evt);
+                tblEditItensMouseClicked(evt);
             }
         });
-        tblIEditItens.addKeyListener(new java.awt.event.KeyAdapter() {
+        tblEditItens.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblIEditItensKeyReleased(evt);
+                tblEditItensKeyReleased(evt);
             }
         });
-        jScrollPane4.setViewportView(tblIEditItens);
+        jScrollPane4.setViewportView(tblEditItens);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -254,7 +254,7 @@ public class EditarBens extends javax.swing.JFrame {
     //Cadastra itens na base de dados.
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        if (tblIEditItens.getSelectedRow() != -1) {
+        if (tblEditItens.getSelectedRow() != -1) {
             Itens item = new Itens();
             ItensDAO dao = new ItensDAO();
 
@@ -265,7 +265,7 @@ public class EditarBens extends javax.swing.JFrame {
             item.setRecurso(recurso.getSelectedItem().toString());
             item.setTipo(tipo.getSelectedItem().toString());
             item.setSituacao(situacao.getSelectedItem().toString());
-            item.setId((int) tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 0));
+            item.setId((int) tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 0));
 
             dao.update(item);
 
@@ -296,22 +296,22 @@ public class EditarBens extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_aquisicaoActionPerformed
 
-    private void tblIEditItensKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblIEditItensKeyReleased
+    private void tblEditItensKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblEditItensKeyReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_tblIEditItensKeyReleased
+    }//GEN-LAST:event_tblEditItensKeyReleased
 
-    private void tblIEditItensMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIEditItensMouseClicked
+    private void tblEditItensMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEditItensMouseClicked
         // TODO add your handling code here:
-        if (tblIEditItens.getSelectedRow() != -1) {
-            nome.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 1).toString());
-            quantidade.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 2).toString());
-            dataEntrada.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 3).toString());
-            aquisicao.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 4).toString());
-            recurso.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 5).toString());
-            tipo.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 6).toString());
-            situacao.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 7).toString());
+        if (tblEditItens.getSelectedRow() != -1) {
+            nome.setText(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 1).toString());
+            quantidade.setText(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 2).toString());
+            dataEntrada.setText(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 3).toString());
+            aquisicao.setSelectedItem(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 4).toString());
+            recurso.setSelectedItem(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 5).toString());
+            tipo.setSelectedItem(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 6).toString());
+            situacao.setSelectedItem(tblEditItens.getValueAt(tblEditItens.getSelectedRow(), 7).toString());
         }
-    }//GEN-LAST:event_tblIEditItensMouseClicked
+    }//GEN-LAST:event_tblEditItensMouseClicked
 
     /**
      * @param args the command line arguments
@@ -364,7 +364,7 @@ public class EditarBens extends javax.swing.JFrame {
     private javax.swing.JTextPane quantidade;
     private javax.swing.JComboBox<String> recurso;
     private javax.swing.JComboBox<String> situacao;
-    private javax.swing.JTable tblIEditItens;
+    private javax.swing.JTable tblEditItens;
     private javax.swing.JComboBox<String> tipo;
     // End of variables declaration//GEN-END:variables
 }
