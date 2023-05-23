@@ -13,19 +13,19 @@ import model.dao.ItensDAO;
  *
  * @author lyand
  */
-public class CadastroBens extends javax.swing.JFrame {
+public class EditarBens extends javax.swing.JFrame {
 
     /**
      * Creates new form CadastroBens
      */
-    public CadastroBens() {
+    public EditarBens() {
         initComponents();
         readJTable();
         recurso.setEnabled(false);
     }
 
     public void readJTable() {  //Método para mostrar na tabela os dados salvos na base de dados.
-        DefaultTableModel tabelaItens = (DefaultTableModel) tblItens.getModel();
+        DefaultTableModel tabelaItens = (DefaultTableModel) tblIEditItens.getModel();
         tabelaItens.setNumRows(0);
 
         ItensDAO item_dao = new ItensDAO();
@@ -63,10 +63,10 @@ public class CadastroBens extends javax.swing.JFrame {
         recurso = new javax.swing.JComboBox<>();
         tipo = new javax.swing.JComboBox<>();
         situacao = new javax.swing.JComboBox<>();
-        btnCadastrar = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        tblItens = new javax.swing.JTable();
+        tblIEditItens = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,12 +106,15 @@ public class CadastroBens extends javax.swing.JFrame {
         situacao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione", "Em uso", "Sucateado" }));
         situacao.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Situação", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 0, 12))); // NOI18N
 
-        btnCadastrar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        btnCadastrar.setText("Cadastrar");
-        btnCadastrar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnCadastrar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        btnEditar.setText("Editar");
+        btnEditar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnEditar.setMaximumSize(new java.awt.Dimension(37, 20));
+        btnEditar.setMinimumSize(new java.awt.Dimension(37, 20));
+        btnEditar.setPreferredSize(new java.awt.Dimension(37, 20));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCadastrarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -124,8 +127,8 @@ public class CadastroBens extends javax.swing.JFrame {
             }
         });
 
-        tblItens.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        tblItens.setModel(new javax.swing.table.DefaultTableModel(
+        tblIEditItens.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        tblIEditItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -141,8 +144,18 @@ public class CadastroBens extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblItens.getTableHeader().setReorderingAllowed(false);
-        jScrollPane4.setViewportView(tblItens);
+        tblIEditItens.getTableHeader().setReorderingAllowed(false);
+        tblIEditItens.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblIEditItensMouseClicked(evt);
+            }
+        });
+        tblIEditItens.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                tblIEditItensKeyReleased(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tblIEditItens);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,7 +174,7 @@ public class CadastroBens extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(recurso, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 324, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnCadastrar, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -192,8 +205,8 @@ public class CadastroBens extends javax.swing.JFrame {
                     .addComponent(situacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCadastrar)
-                    .addComponent(btnCancel))
+                    .addComponent(btnCancel)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
                 .addContainerGap())
@@ -201,7 +214,7 @@ public class CadastroBens extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Cadastro de Itens");
+        jLabel1.setText("Edição de Itens");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -212,7 +225,7 @@ public class CadastroBens extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(270, 270, 270)
+                .addGap(279, 279, 279)
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -239,13 +252,9 @@ public class CadastroBens extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelActionPerformed
 
     //Cadastra itens na base de dados.
-    private void btnCadastrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadastrarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
-        if ((nome.getText().isBlank()) || (quantidade.getText().isBlank()) || (dataEntrada.getText().isBlank())
-                || (aquisicao.getSelectedItem() == "Selecione") || (recurso.getSelectedItem() == "Selecione")
-                || (tipo.getSelectedItem() == "Selecione") || (situacao.getSelectedItem() == "Selecione")) {
-            JOptionPane.showMessageDialog(null, "Campo obrigatório em branco!");
-        } else {
+        if (tblIEditItens.getSelectedRow() != -1) {
             Itens item = new Itens();
             ItensDAO dao = new ItensDAO();
 
@@ -256,8 +265,9 @@ public class CadastroBens extends javax.swing.JFrame {
             item.setRecurso(recurso.getSelectedItem().toString());
             item.setTipo(tipo.getSelectedItem().toString());
             item.setSituacao(situacao.getSelectedItem().toString());
+            item.setId((int) tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 0));
 
-            dao.create(item);
+            dao.update(item);
 
             nome.setText(null);
             quantidade.setText(null);
@@ -268,9 +278,11 @@ public class CadastroBens extends javax.swing.JFrame {
             situacao.setSelectedItem("Selecione");
 
             readJTable();
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao editar item.");
         }
 
-    }//GEN-LAST:event_btnCadastrarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void aquisicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aquisicaoActionPerformed
         // TODO add your handling code here:
@@ -283,6 +295,23 @@ public class CadastroBens extends javax.swing.JFrame {
             recurso.setEnabled(false);
         }
     }//GEN-LAST:event_aquisicaoActionPerformed
+
+    private void tblIEditItensKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblIEditItensKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblIEditItensKeyReleased
+
+    private void tblIEditItensMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblIEditItensMouseClicked
+        // TODO add your handling code here:
+        if (tblIEditItens.getSelectedRow() != -1) {
+            nome.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 1).toString());
+            quantidade.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 2).toString());
+            dataEntrada.setText(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 3).toString());
+            aquisicao.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 4).toString());
+            recurso.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 5).toString());
+            tipo.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 6).toString());
+            situacao.setSelectedItem(tblIEditItens.getValueAt(tblIEditItens.getSelectedRow(), 7).toString());
+        }
+    }//GEN-LAST:event_tblIEditItensMouseClicked
 
     /**
      * @param args the command line arguments
@@ -301,28 +330,29 @@ public class CadastroBens extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EditarBens.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CadastroBens().setVisible(true);
+                new EditarBens().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> aquisicao;
-    private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JTextPane dataEntrada;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
@@ -334,7 +364,7 @@ public class CadastroBens extends javax.swing.JFrame {
     private javax.swing.JTextPane quantidade;
     private javax.swing.JComboBox<String> recurso;
     private javax.swing.JComboBox<String> situacao;
-    private javax.swing.JTable tblItens;
+    private javax.swing.JTable tblIEditItens;
     private javax.swing.JComboBox<String> tipo;
     // End of variables declaration//GEN-END:variables
 }

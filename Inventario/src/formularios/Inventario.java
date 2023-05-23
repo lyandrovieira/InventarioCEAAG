@@ -15,9 +15,9 @@ public class Inventario {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        CadastroBens cadastro = new CadastroBens();
-        cadastro.setVisible(true);
-        cadastro.setResizable(false);
+        ConsultarCadastro consultCad = new ConsultarCadastro();
+        consultCad.setVisible(true);
+        consultCad.setResizable(false);
     }
     
 }
